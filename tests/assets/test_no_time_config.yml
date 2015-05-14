@@ -1,0 +1,6 @@
+host: http://www.example.com
+requests: 100
+clients: 2
+urls:
+    - /
+    - /about

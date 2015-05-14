@@ -3,9 +3,9 @@ import yaml
 
 
 class Tool:
-    def __init__(self, config='config.yml', output_directory='result'):
+    def __init__(self, config='config.yml', result_directory='result'):
         self.read_config(config)
-        self.create_output_directory(output_directory)
+        self.create_result_directory(result_directory)
 
     def read_config(self, config):
         config_stream = open(config, 'r')
@@ -16,9 +16,10 @@ class Tool:
         self.time = config_data['time']
         self.urls = config_data['urls']
 
-    def create_output_directory(self, directory):
+    def create_result_directory(self, directory):
         if not os.path.exists(directory):
             os.makedirs(directory)
+        self.result_directory = directory
 
     def run(self):
         pass

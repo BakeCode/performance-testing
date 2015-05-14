@@ -1,6 +1,7 @@
 import unittest
 import os
 from performance_testing.command_line import Tool
+from performance_testing.errors import ConfigFileError, ConfigKeyError
 
 
 class CommandLineToolTest(unittest.TestCase):
@@ -25,21 +26,27 @@ class CommandLineToolTest(unittest.TestCase):
         self.assertEquals(tool.urls, ['/', '/about'])
 
     def test_read_config(self):
-        with self.assertRaises(IOError) as ex:
+        with self.assertRaises(ConfigFileError) as ex:
             self.tool.read_config(config='foo/bar')
-        self.assertEquals(ex.exception.message, 'Config file error "foo/bar".')
-        with self.assertRaises(KeyError) as ex:
+        self.assertEquals(ex.exception.message, 'Config file not exists "foo/bar".')
+
+        with self.assertRaises(ConfigKeyError) as ex:
             self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_host_config.yml'))
-        self.assertEquals(ex.exception.message, 'host')
-        with self.assertRaises(KeyError) as ex:
+        self.assertEquals(ex.exception.message, 'Config with key "host" not set.')
+
+        with self.assertRaises(ConfigKeyError) as ex:
             self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_requests_config.yml'))
-        self.assertEquals(ex.exception.message, 'requests')
-        with self.assertRaises(KeyError) as ex:
+        self.assertEquals(ex.exception.message, 'Config with key "requests" not set.')
+
+        with self.assertRaises(ConfigKeyError) as ex:
             self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_clients_config.yml'))
-        self.assertEquals(ex.exception.message, 'clients')
-        with self.assertRaises(KeyError) as ex:
+        self.assertEquals(ex.exception.message, 'Config with key "clients" not set.')
+
+        with self.assertRaises(ConfigKeyError) as ex:
             self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_time_config.yml'))
-        self.assertEquals(ex.exception.message, 'time')
-        with self.assertRaises(KeyError) as ex:
+        self.assertEquals(ex.exception.message, 'Config with key "time" not set.')
+
+        with self.assertRaises(ConfigKeyError) as ex:
             self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_urls_config.yml'))
-        self.assertEquals(ex.exception.message, 'urls')
+        self.assertEquals(ex.exception.message, 'Config with key "urls" not set.')
+        

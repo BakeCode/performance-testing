@@ -1,5 +1,6 @@
 import os
 import yaml
+from errors import ConfigFileError, ConfigKeyError
 
 
 class Tool:
@@ -17,9 +18,9 @@ class Tool:
             self.time = config_data['time']
             self.urls = config_data['urls']
         except KeyError, ex:
-            raise ex
+            raise ConfigKeyError(ex.message)
         except IOError:
-            raise IOError('Config file error "%s".' % config)
+            raise ConfigFileError(config)
 
     def create_result_directory(self, directory):
         if not os.path.exists(directory):

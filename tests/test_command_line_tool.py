@@ -10,6 +10,7 @@ class CommandLineToolTest(unittest.TestCase):
         self.result_directory = os.path.join(self.current_directory, 'assets/test_result')
         if os.path.exists(self.result_directory):
             os.removedirs(self.result_directory)
+        self.tool = Tool(self.config, result_directory=self.result_directory)
 
     def test_init(self):
         tool = Tool(config=self.config, result_directory=self.result_directory)
@@ -22,3 +23,23 @@ class CommandLineToolTest(unittest.TestCase):
         self.assertEquals(tool.clients, 2)
         self.assertEquals(tool.time, 60)
         self.assertEquals(tool.urls, ['/', '/about'])
+
+    def test_read_config(self):
+        with self.assertRaises(IOError) as ex:
+            self.tool.read_config(config='foo/bar')
+        self.assertEquals(ex.exception.message, 'Config file error "foo/bar".')
+        with self.assertRaises(KeyError) as ex:
+            self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_host_config.yml'))
+        self.assertEquals(ex.exception.message, 'host')
+        with self.assertRaises(KeyError) as ex:
+            self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_requests_config.yml'))
+        self.assertEquals(ex.exception.message, 'requests')
+        with self.assertRaises(KeyError) as ex:
+            self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_clients_config.yml'))
+        self.assertEquals(ex.exception.message, 'clients')
+        with self.assertRaises(KeyError) as ex:
+            self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_time_config.yml'))
+        self.assertEquals(ex.exception.message, 'time')
+        with self.assertRaises(KeyError) as ex:
+            self.tool.read_config(config=os.path.join(self.current_directory, 'assets/test_no_urls_config.yml'))
+        self.assertEquals(ex.exception.message, 'urls')

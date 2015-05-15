@@ -1,6 +1,7 @@
 import os
 import yaml
 from performance_testing.errors import ConfigFileError, ConfigKeyError
+import web
 
 
 class Tool:
@@ -29,4 +30,9 @@ class Tool:
         self.result_directory = directory
 
     def run(self):
-        pass
+        print 'Run tests'
+        for url in self.urls:
+            full_url = self.host + url
+            print 'URL: %s' % url
+            for i in range(0, self.requests):
+                print '%i - %.3f' % (i, web.request(full_url))

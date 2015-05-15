@@ -1,6 +1,6 @@
 import os
 import yaml
-from errors import ConfigFileError, ConfigKeyError
+from performance_testing.errors import ConfigFileError, ConfigKeyError
 
 
 class Tool:
@@ -12,13 +12,14 @@ class Tool:
         try:
             config_stream = open(config, 'r')
             config_data = yaml.load(config_stream)
+            config_stream.close()
             self.host = config_data['host']
             self.requests = config_data['requests']
             self.clients = config_data['clients']
             self.time = config_data['time']
             self.urls = config_data['urls']
-        except KeyError, ex:
-            raise ConfigKeyError(ex.message)
+        except KeyError as ex:
+            raise ConfigKeyError(ex.args[0])
         except IOError:
             raise ConfigFileError(config)
 

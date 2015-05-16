@@ -1,9 +1,9 @@
 import requests
-import time
+from time import time
 
 
 def request(url):
-    start = time.time()
+    start = time()
     response = requests.get(url)
-    end = time.time()
+    end = time()
     return end - start

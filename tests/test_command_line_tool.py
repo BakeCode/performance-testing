@@ -2,6 +2,8 @@ import unittest
 import os
 import shutil
 from performance_testing.command_line import Tool
+from performance_testing.result import Result
+from performance_testing.config import Config
 from performance_testing.errors import ConfigFileError, ConfigKeyError
 
 
@@ -13,3 +15,5 @@ class CommandLineToolTest(unittest.TestCase):
 
     def test_init(self):
         tool = Tool(config=self.config, result_directory=self.result_directory)
+        self.assertIsInstance(tool.config, Config)
+        self.assertIsInstance(tool.result, Result)

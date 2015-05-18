@@ -18,7 +18,7 @@ class Tool:
         print('Start tests ...')
         for url in self.config.urls:
             full_url = self.config.host + url
-            self.result.file.write_line('URL: %s\n' % url)
+            self.result.file.write_line('URL: %s' % url)
             for i in range(0, self.config.requests):
-                self.result.file.write_line('    %i - %.3f\n' % (i, web.request(full_url)))
+                self.result.file.write_line('    %i - %.3f' % (i, web.request(full_url)))
         print('Finished tests!')

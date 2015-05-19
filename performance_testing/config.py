@@ -8,7 +8,7 @@ class Config:
             try:
                 getattr(self, attribute)
             except AttributeError as ex:
-                raise errors.ConfigError(config_key=attributes)
+                raise errors.ConfigError(config_key=attribute)
 
     def url(self, url):
         return self.host + url

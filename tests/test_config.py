@@ -40,6 +40,18 @@ class ConfigTestCase(unittest.TestCase):
         ]
 
     def test_url(self):
-        self.assertEqual('http://www.example.com/', self.config.url(self.config.requests[0].url))
-        self.assertEqual('http://www.example.com/about', self.config.url(self.config.requests[1].url))
-        self.assertEqual('http://www.example.com/imprint', self.config.url(self.config.requests[2].url))
+        self.assertEqual('http://www.example.com/',
+                         self.config.url(self.config.requests[0].url))
+        self.assertEqual('http://www.example.com/about',
+                         self.config.url(self.config.requests[1].url))
+        self.assertEqual('http://www.example.com/imprint',
+                         self.config.url(self.config.requests[2].url))
+
+    def test_request_init(self):
+        url = '/the/url'
+        type = 'GET'
+        data = 'foo=bar&bla=blubb'
+        request = Request(url=url, type=type, data=data)
+        self.assertEqual(request.url, url)
+        self.assertEqual(request.type, type)
+        self.assertEqual(request.data, data)

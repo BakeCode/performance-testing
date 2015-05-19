@@ -6,14 +6,7 @@ from time import time
 class Result:
     def __init__(self, directory):
         date = datetime.fromtimestamp(time())
-        name = '%d-%d-%d_%d-%d-%d' % (
-            date.year,
-            date.month,
-            date.day,
-            date.hour,
-            date.minute,
-            date.second)
-        self.file = File(directory, name)
+        self.file = File(directory, date.strftime('%Y-%m-%d_%H-%M-%S'))
 
 
 class File:

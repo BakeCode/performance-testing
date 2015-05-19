@@ -1,20 +1,21 @@
-import os
-import yaml
 from performance_testing import errors
 
 
 class Config:
-    def __init__(self, config_path='config.yml'):
-        try:
-            stream = open(config_path, 'r')
-            config_data = yaml.load(stream)
-            stream.close()
-            self.host = config_data['host']
-            self.requests = config_data['requests']
-            self.clients = config_data['clients']
-            self.time = config_data['time']
-            self.urls = config_data['urls']
-        except KeyError as ex:
-            raise errors.ConfigKeyError(ex.args[0])
-        except IOError:
-            raise errors.ConfigFileError(config_path)
+    def check_valid(self):
+        attributes = ['host', 'requests_count', 'clients_count', 'requests']
+        for attribute in attributes:
+            try:
+                getattr(self, attribute)
+            except AttributeError as ex:
+                raise errors.ConfigError(config_key=attributes)
+
+    def url(self, url):
+        return self.host + url
+
+
+class Request:
+    def __init__(self, url, type='GET', data=''):
+        self.url = url
+        self.type = type
+        self.data = data

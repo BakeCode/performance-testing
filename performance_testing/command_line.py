@@ -1,11 +1,11 @@
 from performance_testing.web import TimeRequest
-from performance_testing.config import Config
 from performance_testing.result import Result
 
 
 class Tool:
-    def __init__(self, config='config.yml', result_directory='result'):
-        self.config = Config(config_path=config)
+    def __init__(self, config, result_directory='result'):
+        self.config = config
+        self.config.check_valid()
         self.result = Result(result_directory)
 
     def start_testing(self):
@@ -13,9 +13,9 @@ class Tool:
 
     def run(self):
         print('Start tests ...')
-        for url in self.config.urls:
-            full_url = self.config.host + url
-            self.result.file.write_line('URL: %s' % url)
-            for i in range(0, self.config.requests):
+        for request in self.config.requests:
+            full_url = self.config.url(request.url)
+            self.result.file.write_line('URL: %s' % request.url)
+            for i in range(0, self.config.requests_count):
                 self.result.file.write_line('    %i - %.3f' % (i, TimeRequest.get(url=full_url)))
         print('Finished tests!')

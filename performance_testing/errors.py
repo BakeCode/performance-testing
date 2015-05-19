@@ -6,13 +6,7 @@ class Error(Exception):
         return repr(self.message)
 
 
-class ConfigFileError(Exception):
-    def __init__(self, file):
-        self.file = file
-        self.message = 'Config file not exists "%s".' % self.file
-
-
-class ConfigKeyError(Exception):
-    def __init__(self, key):
-        self.key = key
-        self.message = 'Config with key "%s" not set.' % self.key
+class ConfigError(Exception):
+    def __init__(self, config_key):
+        self.config_key = config_key
+        self.message = 'Config with name "%s" not set.' % self.config_key

@@ -19,7 +19,8 @@ class ResultTestCase(unittest.TestCase):
         self.clear_result_dir()
         self.assertFalse(os.path.exists(self.result_directory))
         result = Result(directory=self.result_directory)
-        self.assertTrue(result.file.path)
+        self.assertTrue(os.path.exists(result.file.path))
+        self.assertRegexpMatches(result.file.path, '[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}-[0-9]{2}-[0-9]{2}')
 
     def test_file_init(self):
         self.clear_result_dir()

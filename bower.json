@@ -1,0 +1,20 @@
+{
+  "name": "performance-testing",
+  "version": "0.0.1",
+  "homepage": "https://github.com/BakeCode/performance-testing",
+  "authors": [
+    "Andreas Bissinger <mail@bissinger-andreas.de>"
+  ],
+  "description": "Tool to make requests against an web app and test its performance.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Chart.js": "~1.0.2"
+  }
+}

@@ -1,6 +1,6 @@
 class Error(Exception):
     def __init__(self):
-        self.message = 'bla'
+        self.message = ''
 
     def __str__(self):
         return repr(self.message)

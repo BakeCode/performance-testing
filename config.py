@@ -7,6 +7,5 @@ CONFIG.clients_count = 2
 CONFIG.requests_count = 10
 CONFIG.requests = [
     Request(url='/', type='GET', data=''),
-    Request(url='/about', type='GET', data=''),
-    Request(url='/imprint', type='GET', data='')
+    Request(url='/about', type='GET', data='')
 ]

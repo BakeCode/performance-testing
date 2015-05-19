@@ -1,7 +1,4 @@
-import os
-import yaml
-from performance_testing.errors import ConfigFileError, ConfigKeyError
-from performance_testing import web
+from performance_testing.web import TimeRequest
 from performance_testing.config import Config
 from performance_testing.result import Result
 
@@ -20,5 +17,5 @@ class Tool:
             full_url = self.config.host + url
             self.result.file.write_line('URL: %s' % url)
             for i in range(0, self.config.requests):
-                self.result.file.write_line('    %i - %.3f' % (i, web.request(full_url)))
+                self.result.file.write_line('    %i - %.3f' % (i, TimeRequest.get(url=full_url)))
         print('Finished tests!')

@@ -1,13 +1,18 @@
 import os
 from datetime import datetime
 from time import time
-import shutil
 
 
 class Result:
     def __init__(self, directory):
         date = datetime.fromtimestamp(time())
-        name = '%d-%d-%d_%d-%d-%d' % (date.year, date.month, date.day, date.hour, date.minute, date.second)
+        name = '%d-%d-%d_%d-%d-%d' % (
+            date.year,
+            date.month,
+            date.day,
+            date.hour,
+            date.minute,
+            date.second)
         self.file = File(directory, name)
 
 

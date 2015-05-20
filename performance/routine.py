@@ -12,9 +12,11 @@ class Tool:
 
 
 class Config:
-    def __init__(self, host):
+    def __init__(self, host, requests=[], do_requests_count=10, clients_count=1):
         self.host = host
-        self.requests = []
+        self.requests = requests
+        self.do_requests_count = do_requests_count
+        self.clients_count = clients_count
 
     def add_request(self, request):
         if not isinstance(request, web.Request):

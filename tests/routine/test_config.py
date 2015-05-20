@@ -10,15 +10,17 @@ class ConfigTestCase(unittest.TestCase):
     def test_init(self):
         config = Config(host=self.host)
         self.assertEqual(self.host, config.host)
-        self.assertEqual([], config.requests)
+        self.assertListEqual([], config.requests)
+        self.assertEqual(10, config.do_requests_count)
+        self.assertEqual(1, config.clients_count)
 
     def test_add_request(self):
-        config = Config(host=self.host)
-        requestA = Request(url='/', type=Request.GET)
-        requestB = Request(url='/about', type=Request.POST)
-        config.add_request(requestA)
-        config.add_request(requestB)
-        self.assertEqual([requestA, requestB], config.requests)
+        config = Config(host='config_host')
+        request_a = Request(url='/', type=Request.GET)
+        request_b = Request(url='/about', type=Request.POST)
+        config.add_request(request_a)
+        config.add_request(request_b)
+        self.assertListEqual([request_a, request_b], config.requests)
         with self.assertRaises(TypeError) as error:
             config.add_request('no_request_type')
         self.assertEqual('No performance.web.Request object', error.exception.__str__())

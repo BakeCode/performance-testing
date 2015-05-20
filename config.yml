@@ -1,7 +1,0 @@
-host: http://www.example.com
-requests: 10
-clients: 2
-time: 60
-urls:
-    - /
-    - /about

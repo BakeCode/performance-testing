@@ -6,3 +6,12 @@ class Request:
         self.url = url
         self.type = type
         self.data = data
+
+
+class RequestData:
+    def __init__(self, data=None):
+        self.data = data
+
+    def for_type(self, type=Request.GET):
+        if type is Request.GET:
+            return data

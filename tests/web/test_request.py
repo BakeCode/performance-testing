@@ -11,9 +11,11 @@ class RequestTestCase(unittest.TestCase):
         self.assertEqual('post', Request.POST)
 
     def test_init(self):
-        request = Request(url=self.url, type=Request.GET)
-        self.assertEqual(self.url, request.url)
+        request = Request(url=self.url)
         self.assertEqual(Request.GET, request.type)
+        self.assertEqual(self.url, request.url)
+        request = Request(url=self.url, type=Request.POST)
+        self.assertEqual(Request.POST, request.type)
 
     def test_do(self):
         request = Request(url=self.url, type=Request.GET)

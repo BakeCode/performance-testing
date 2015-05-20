@@ -3,7 +3,7 @@
 class Tool:
     def __init__(self, config):
         if not isinstance(config, Config):
-            raise TypeError('No performance.routine.Config object.')
+            raise TypeError('No performance.routine.Config object')
         self.config = config
 
     def run(self):
@@ -17,5 +17,5 @@ class Config:
 
     def add_request(self, request):
         if not isinstance(request, web.Request):
-            raise TypeError('No performance.web.Request object.')
+            raise TypeError('No performance.web.Request object')
         self.requests.append(request)

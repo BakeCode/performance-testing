@@ -10,3 +10,6 @@ class ToolTestCase(unittest.TestCase):
     def test_init(self):
         tool = Tool(config=self.config)
         self.assertEqual(self.config, tool.config)
+        with self.assertRaises(TypeError) as error:
+            tool = Tool(config='invalid_config')
+        self.assertEqual('No performance.routine.Config object', error.exception.message)

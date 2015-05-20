@@ -28,7 +28,7 @@ class RequestTestCase(unittest.TestCase):
         request = Request(url=self.url, type=type)
         with self.assertRaises(RequestTypeError) as error:
             request.do()
-        self.assertEqual('Invalid request type "%s".' % type, error.exception.__str__())
+        self.assertEqual('Invalid request type "%s"' % type, error.exception.__str__())
 
     def test_response_time(self):
         request = Request(url=self.url, type=Request.GET)

@@ -11,3 +11,7 @@ class FinishEventTestCase(unittest.TestCase):
         event = FinishEvent()
         event.finish()
         self.assertEqual(1, event.finished)
+        event.finish()
+        self.assertEqual(2, event.finished)
+        event.finish()
+        self.assertEqual(3, event.finished)

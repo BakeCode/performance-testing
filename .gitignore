@@ -59,5 +59,8 @@ target/
 # testing results
 result/
 
+# bower
+bower_components/
+
 # IDE
 .idea/

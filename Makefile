@@ -6,3 +6,7 @@ watch:
 
 run:
 	./run.py
+
+bower:
+	bower install c3
+

@@ -49,7 +49,3 @@ class RequestTypeError(Exception):
 
     def __str__(self):
         return 'Invalid request type "%s"' % self.type
-
-
-class RequestTimeError(Exception):
-    pass

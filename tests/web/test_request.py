@@ -1,5 +1,5 @@
 import unittest
-from performance.web import Request, RequestTypeError, RequestTimeError
+from performance.web import Request, RequestTypeError
 
 
 class RequestTestCase(unittest.TestCase):

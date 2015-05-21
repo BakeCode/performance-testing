@@ -12,6 +12,7 @@ class Tool:
         for client_index in range(self.config.clients_count):
             client = web.Client(host=self.config.host, requests=self.config.requests, do_requests_counter=self.config.requests_per_client)
             clients.append(client)
+            client.start()
 
 
 class Config:

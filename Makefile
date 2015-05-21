@@ -3,5 +3,6 @@ test:
 
 watch:
 	watchmedo shell-command --patterns="*.py" --recursive --command='make test'
+
 run:
 	./run.py

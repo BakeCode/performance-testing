@@ -23,7 +23,8 @@ class Tool:
                     requests=self.config.requests,
                     do_requests_counter=self.config.requests_per_client,
                     event=run_event,
-                    finish_event=finish_event
+                    finish_event=finish_event,
+                    client_name='client_%d' % client_index
                 )
                 clients.append(client)
                 client.start()

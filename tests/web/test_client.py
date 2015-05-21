@@ -16,7 +16,8 @@ class ClientTestCase(unittest.TestCase):
             requests=requests,
             do_requests_counter=requests_counter,
             event=Event(),
-            finish_event=FinishEvent()
+            finish_event=FinishEvent(),
+            client_name='client_1.json'
         )
         self.assertListEqual(requests, client.requests)
         self.assertEqual(requests_counter, client.counter)

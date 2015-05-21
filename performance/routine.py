@@ -30,3 +30,12 @@ class Config:
         if not isinstance(request, web.Request):
             raise TypeError('No performance.web.Request object')
         self.requests.append(request)
+
+    def is_valid(self):
+        return not(
+            not self.requests
+            or
+            self.clients_count < 1
+            or
+            self.requests_per_client < 1
+        )

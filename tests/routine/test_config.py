@@ -24,3 +24,21 @@ class ConfigTestCase(unittest.TestCase):
         with self.assertRaises(TypeError) as error:
             config.add_request('no_request_type')
         self.assertEqual('No performance.web.Request object', error.exception.__str__())
+
+    def test_is_valid(self):
+        config = Config(host='config_host')
+        self.assertFalse(config.is_valid())
+
+        config = Config(host='config_host')
+        config.requests_per_client = 0
+        config.add_request(Request(url='/', type=Request.GET))
+        self.assertFalse(config.is_valid())
+
+        config = Config(host='config_host')
+        config.clients_count = 0
+        config.add_request(Request(url='/', type=Request.GET))
+        self.assertFalse(config.is_valid())
+
+        config = Config(host='config_host')
+        config.add_request(Request(url='/', type=Request.GET))
+        self.assertTrue(config.is_valid())

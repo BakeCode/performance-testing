@@ -18,10 +18,46 @@ class ClientTestCase(unittest.TestCase):
             do_requests_counter=requests_counter,
             run_event=Event(),
             finish_event=FinishEvent(),
-            client_name='client_1.json'
+            client_name='client_0'
         )
         self.assertListEqual(requests, client.requests)
         self.assertEqual(requests_counter, client.counter)
+
+    def test_run(self):
+        requests = [
+            Request(url='/'),
+            Request(url='/about'),
+            Request(url='/imprint')
+        ]
+        requests_counter = 5
+        run_event = Event()
+        run_event.set()
+        finish_event = FinishEvent()
+        client_name = 'client_0'
+        client = Client(
+            host=self.host,
+            requests=requests,
+            do_requests_counter=requests_counter,
+            run_event=run_event,
+            finish_event=finish_event,
+            client_name=client_name
+        )
+        client.run()
+        self.assertEqual(1, finish_event.finished)
+        self.assertEqual(0, client.counter)
+        self.assertEqual(requests_counter * len(requests), len(client.responses))
+        stream = open('result/%s.json' % client_name, 'r')
+        content = json.loads(stream.read())
+        stream.close
+        keys = [
+            '%s%s' % (client_name, requests[0].url),
+            '%s%s' % (client_name, requests[1].url),
+            '%s%s' % (client_name, requests[2].url)
+        ]
+        for key in keys:
+            self.assertTrue(key in content)
+            self.assertEqual(requests_counter, len(content[key]))
+
     def test_write_to_file(self):
         client_name = 'client_0'
         client = Client(

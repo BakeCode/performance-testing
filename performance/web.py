@@ -40,19 +40,28 @@ class Request:
                 data=data
             )
             finished = time()
-            return Response(url=self.url, time=finished - started, code=response.status_code)
+            return Response(
+                url=self.url,
+                started=started,
+                finished=finished,
+                code=response.status_code
+            )
         except AttributeError:
             raise RequestTypeError(type=self.type)
 
 
 class Response:
-    def __init__(self, url, time, code):
+    def __init__(self, url, started, finished, code):
         self.url = url
-        self.time = time
+        self.started = started
+        self.finished = finished
         self.code = code
 
+    def time(self):
+        return self.finished - self.started
+
     def __str__(self):
-        return '   %s   %.4f   %d' % (self.url, self.time, self.code)
+        return '   %s   %.4f   %d' % (self.url, self.time(), self.code)
 
 
 class RequestData:

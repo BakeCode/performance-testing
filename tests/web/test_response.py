@@ -3,21 +3,42 @@ from performance.web import Response
 
 
 class ResponseTestCase(unittest.TestCase):
+    def setUp(self):
+        self.url = '/foo/bar'
+        self.started = 23.2032139
+        self.finished = 42.2321123
+        self.time = self.finished - self.started
+        self.code = 200
+
     def test_init(self):
-        url = '/foo/bar'
-        time = 23.203
-        code = 200
-        response = Response(url=url, time=time, code=code)
-        self.assertEqual(url, response.url)
-        self.assertEqual(time, response.time)
-        self.assertEqual(code, response.code)
+        response = Response(
+            url=self.url,
+            started=self.started,
+            finished=self.finished,
+            code=self.code
+        )
+        self.assertEqual(self.url, response.url)
+        self.assertEqual(self.started, response.started)
+        self.assertEqual(self.finished, response.finished)
+        self.assertEqual(self.code, response.code)
+
+    def test_time(self):
+        response = Response(
+            url=self.url,
+            started=self.started,
+            finished=self.finished,
+            code=self.code
+        )
+        self.assertEqual(self.time, response.time())
 
     def test_to_string(self):
-        url = '/foo/bar'
-        time = 23.203
-        code = 200
-        response = Response(url=url, time=time, code=code)
+        response = Response(
+            url=self.url,
+            started=self.started,
+            finished=self.finished,
+            code=self.code
+        )
         self.assertEqual(
-            '   %s   %.4f   %d' % (url, time, code),
+            '   %s   %.4f   %d' % (self.url, self.time, self.code),
             response.__str__()
         )

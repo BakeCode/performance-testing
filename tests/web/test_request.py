@@ -18,12 +18,12 @@ class RequestTestCase(unittest.TestCase):
         self.assertEqual(Request.POST, request.type)
 
     def test_do(self):
-        request = Request(url=self.host, type=Request.GET)
-        request.do()
+        request = Request(url='/', type=Request.GET)
+        request.do(host=self.host)
 
     def test_invalid_type(self):
         type = 'foo_bar'
         request = Request(url=self.host, type=type)
         with self.assertRaises(RequestTypeError) as error:
-            request.do()
+            request.do(host=self.host)
         self.assertEqual('Invalid request type "%s"' % type, error.exception.__str__())

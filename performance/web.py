@@ -24,14 +24,14 @@ class Request:
         self.type = type
         self.data = data
 
-    def do(self):
+    def do(self, host):
         try:
             data = ''
             if isinstance(self.data, RequestData):
                 data = self.data.for_type(type=self.type)
             started = time()
             response = getattr(requests, self.type)(
-                url=self.url,
+                url=host + self.url,
                 data=data
             )
             finished = time()

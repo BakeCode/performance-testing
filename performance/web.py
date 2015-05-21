@@ -18,7 +18,7 @@ class Client(Thread):
             for request in self.requests:
                 self.responses.append(request.do(host=self.host))
             self.counter = self.counter - 1
-        print ' > Finished a client'
+        print(' > Finished a client')
         self.finish_event.finish()
 
 

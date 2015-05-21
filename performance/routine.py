@@ -15,9 +15,8 @@ class Tool:
             run_event.set()
             finish_event = FinishEvent()
             clients = []
-            print(' > Starting tests')
+            print(' > Started tests')
             print(' > Stop tests with CTRL-C')
-            print('   URL   Time   Code')
             for client_index in range(self.config.clients_count):
                 client = web.Client(
                     host=self.config.host,

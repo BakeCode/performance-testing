@@ -39,3 +39,11 @@ class Config:
             or
             self.requests_per_client < 1
         )
+
+
+class FinishEvent:
+    def __init__(self):
+        self.finished = 0
+
+    def finish(self):
+        self.finished = self.finished + 1

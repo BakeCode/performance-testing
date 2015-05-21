@@ -13,3 +13,7 @@ class ToolTestCase(unittest.TestCase):
         with self.assertRaises(TypeError) as error:
             tool = Tool(config='invalid_config')
         self.assertEqual('No performance.routine.Config object', error.exception.__str__())
+
+    def test_run(self):
+        tool = Tool(config=self.config)
+        tool.run()

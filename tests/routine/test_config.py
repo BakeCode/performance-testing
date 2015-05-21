@@ -11,8 +11,15 @@ class ConfigTestCase(unittest.TestCase):
         config = Config(host=self.host)
         self.assertEqual(self.host, config.host)
         self.assertListEqual([], config.requests)
-        self.assertEqual(10, config.requests_per_client)
-        self.assertEqual(1, config.clients_count)
+        requests_per_client = 100
+        clients_count = 23
+        config = Config(
+            host=self.host,
+            requests_per_client=requests_per_client,
+            clients_count=clients_count
+        )
+        self.assertEqual(requests_per_client, config.requests_per_client)
+        self.assertEqual(clients_count, config.clients_count)
 
     def test_add_request(self):
         config = Config(host='config_host')

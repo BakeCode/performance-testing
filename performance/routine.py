@@ -1,4 +1,6 @@
 from performance import web
+import time
+import threading
 
 
 class Tool:
@@ -8,15 +10,34 @@ class Tool:
         self.config = config
 
     def run(self):
-        clients = []
-        for client_index in range(self.config.clients_count):
-            client = web.Client(
-                host=self.config.host,
-                requests=self.config.requests,
-                do_requests_counter=self.config.requests_per_client
-            )
-            clients.append(client)
-            client.start()
+        if self.config.is_valid():
+            run_event = threading.Event()
+            run_event.set()
+            finish_event = FinishEvent()
+            clients = []
+            print(' > Starting tests')
+            print(' > Stop tests with CTRL-C')
+            for client_index in range(self.config.clients_count):
+                client = web.Client(
+                    host=self.config.host,
+                    requests=self.config.requests,
+                    do_requests_counter=self.config.requests_per_client,
+                    event=run_event,
+                    finish_event=finish_event
+                )
+                clients.append(client)
+                client.start()
+            try:
+                while finish_event.finished < self.config.clients_count:
+                    time.sleep(.1)
+                print(' > Finished tests')
+            except KeyboardInterrupt:
+                run_event.clear()
+                for client in clients:
+                    client.join()
+                print(' > Exited with CTRL-C')
+        else:
+            print('Invalid configuration')
 
 
 class Config:

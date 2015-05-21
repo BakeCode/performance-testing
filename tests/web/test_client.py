@@ -1,5 +1,7 @@
 import unittest
 from performance.web import Client
+from performance.routine import FinishEvent
+from threading import Event
 
 
 class ClientTestCase(unittest.TestCase):
@@ -9,6 +11,12 @@ class ClientTestCase(unittest.TestCase):
     def test_init(self):
         requests = []
         requests_counter = 10
-        client = Client(host=self.host, requests=requests, do_requests_counter=requests_counter)
+        client = Client(
+            host=self.host,
+            requests=requests,
+            do_requests_counter=requests_counter,
+            event=Event(),
+            finish_event=FinishEvent()
+        )
         self.assertListEqual(requests, client.requests)
         self.assertEqual(requests_counter, client.counter)

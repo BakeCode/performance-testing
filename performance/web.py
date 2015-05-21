@@ -4,18 +4,20 @@ from threading import Thread
 
 
 class Client(Thread):
-    def __init__(self, host, requests, do_requests_counter):
+    def __init__(self, host, requests, do_requests_counter, event, finish_event):
         super(Client, self).__init__()
         self.host = host
         self.requests = requests
         self.counter = do_requests_counter
+        self.event = event
+        self.finish_event = finish_event
 
     def run(self):
-        while 0 < self.counter:
+        while 0 < self.counter and self.event.is_set():
             for request in self.requests:
                 print('%s - %.4f' % (request.url, request.do(host=self.host)))
             self.counter = self.counter - 1
-        # do requests
+        self.finish_event.finish()
 
 
 class Request:

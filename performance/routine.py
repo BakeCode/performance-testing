@@ -17,6 +17,7 @@ class Tool:
             clients = []
             print(' > Starting tests')
             print(' > Stop tests with CTRL-C')
+            print('   URL   Time   Code')
             for client_index in range(self.config.clients_count):
                 client = web.Client(
                     host=self.config.host,

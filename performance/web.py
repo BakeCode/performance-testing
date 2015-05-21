@@ -1,6 +1,7 @@
 import requests
 from time import time
 from threading import Thread
+import json
 
 
 class Client(Thread):
@@ -15,11 +16,23 @@ class Client(Thread):
         self.responses = []
 
     def run(self):
+        url_times = {}
         while 0 < self.counter and self.event.is_set():
             for request in self.requests:
-                self.responses.append(request.do(host=self.host))
+                key = self.client_name + request.url
+                if not key in url_times:
+                    url_times[key] = []
+                response = request.do(host=self.host)
+                url_times[key].append(round(response.time(), 5))
+                self.responses.append(response)
             self.counter = self.counter - 1
-        print(' > Finished a client')
+        if self.counter is 0:
+            print(' > Finished a client')
+            stream = open('result/%s.json' % self.client_name, 'w')
+            stream.write(json.dumps(url_times))
+            stream.close()
+        else:
+            print(' > Interrupted a client')
         self.finish_event.finish()
 
 

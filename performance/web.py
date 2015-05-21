@@ -5,19 +5,19 @@ import json
 
 
 class Client(Thread):
-    def __init__(self, host, requests, do_requests_counter, event, finish_event, client_name):
+    def __init__(self, host, requests, do_requests_counter, run_event, finish_event, client_name):
         super(Client, self).__init__()
         self.host = host
         self.requests = requests
         self.counter = do_requests_counter
-        self.event = event
+        self.run_event = run_event
         self.finish_event = finish_event
         self.client_name = client_name
         self.responses = []
 
     def run(self):
         url_times = {}
-        while 0 < self.counter and self.event.is_set():
+        while 0 < self.counter and self.run_event.is_set():
             for request in self.requests:
                 key = self.client_name + request.url
                 if not key in url_times:

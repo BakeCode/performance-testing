@@ -15,7 +15,7 @@ class ClientTestCase(unittest.TestCase):
             host=self.host,
             requests=requests,
             do_requests_counter=requests_counter,
-            event=Event(),
+            run_event=Event(),
             finish_event=FinishEvent(),
             client_name='client_1.json'
         )

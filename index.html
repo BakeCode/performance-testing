@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chart</title>
+        <link href="bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="chart"></div>
+        <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
+        <script src="bower_components/c3/c3.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            var chart = c3.generate({
+                bindto: '#chart',
+                data: {
+                    url: 'result/client_0.json',
+                    mimeType: 'json',
+                    type: 'spline'
+                }
+            });
+        </script>
+    </body>
+</html>

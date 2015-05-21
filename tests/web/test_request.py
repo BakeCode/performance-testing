@@ -1,5 +1,5 @@
 import unittest
-from performance.web import Request, RequestTypeError
+from performance.web import Request, RequestTypeError, Response
 
 
 class RequestTestCase(unittest.TestCase):
@@ -19,7 +19,8 @@ class RequestTestCase(unittest.TestCase):
 
     def test_do(self):
         request = Request(url='/', type=Request.GET)
-        request.do(host=self.host)
+        response = request.do(host=self.host)
+        self.assertTrue(isinstance(response, Response))
 
     def test_invalid_type(self):
         type = 'foo_bar'

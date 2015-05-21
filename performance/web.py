@@ -15,7 +15,7 @@ class Client(Thread):
     def run(self):
         while 0 < self.counter and self.event.is_set():
             for request in self.requests:
-                print('%s - %.4f' % (request.url, request.do(host=self.host)))
+                print(request.do(host=self.host))
             self.counter = self.counter - 1
         self.finish_event.finish()
 
@@ -40,9 +40,19 @@ class Request:
                 data=data
             )
             finished = time()
-            return finished - started
+            return Response(url=self.url, time=finished - started, code=response.status_code)
         except AttributeError:
             raise RequestTypeError(type=self.type)
+
+
+class Response:
+    def __init__(self, url, time, code):
+        self.url = url
+        self.time = time
+        self.code = code
+
+    def __str__(self):
+        return '   %s   %.4f   %d' % (self.url, self.time, self.code)
 
 
 class RequestData:

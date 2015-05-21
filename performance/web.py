@@ -16,24 +16,27 @@ class Client(Thread):
         self.responses = []
 
     def run(self):
-        url_times = {}
+        data = {}
         while 0 < self.counter and self.run_event.is_set():
             for request in self.requests:
                 key = self.client_name + request.url
-                if not key in url_times:
-                    url_times[key] = []
+                if not key in data:
+                    data[key] = []
                 response = request.do(host=self.host)
-                url_times[key].append(round(response.time(), 5))
+                data[key].append(round(response.time(), 5))
                 self.responses.append(response)
             self.counter = self.counter - 1
         if self.counter is 0:
             print(' > Finished a client')
-            stream = open('result/%s.json' % self.client_name, 'w')
-            stream.write(json.dumps(url_times))
-            stream.close()
+            self.write_to_file(data=data)
         else:
             print(' > Interrupted a client')
         self.finish_event.finish()
+
+    def write_to_file(self, data):
+        stream = open('result/%s.json' % self.client_name, 'w')
+        stream.write(json.dumps(data))
+        stream.close()
 
 
 class Request:

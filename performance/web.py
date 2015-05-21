@@ -52,7 +52,7 @@ class Request:
         try:
             data = ''
             if isinstance(self.data, RequestData):
-                data = self.data.for_type(type=self.type)
+                data = self.data.get_converted(type=self.type)
             started = time()
             try:
                 response = getattr(requests, self.type)(

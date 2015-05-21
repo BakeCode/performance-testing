@@ -54,28 +54,27 @@ class Request:
             if isinstance(self.data, RequestData):
                 data = self.data.get_converted(type=self.type)
             started = time()
-            try:
-                response = getattr(requests, self.type)(
-                    url=host + self.url,
-                    data=data,
-                    timeout=10
-                )
-                finished = time()
-                return Response(
-                    url=self.url,
-                    started=started,
-                    finished=finished,
-                    code=response.status_code
-                )
-            except requests.exceptions.Timeoute:
-                return Response(
-                    url=self.url,
-                    started=0,
-                    finished=0,
-                    code=0
-                )
+            response = getattr(requests, self.type)(
+                url=host + self.url,
+                data=data,
+                timeout=10
+            )
+            finished = time()
+            return Response(
+                url=self.url,
+                started=started,
+                finished=finished,
+                code=response.status_code
+            )
         except AttributeError:
             raise RequestTypeError(type=self.type)
+        except requests.exceptions.Timeout:
+            return Response(
+                url=self.url,
+                started=0,
+                finished=0,
+                code=0
+            )
 
 
 class Response:

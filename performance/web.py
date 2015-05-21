@@ -63,6 +63,13 @@ class Response:
     def __str__(self):
         return '   %s   %.4f   %d' % (self.url, self.time(), self.code)
 
+    def to_dictionary(self):
+        return {
+            'code': self.code,
+            'started': self.started,
+            'time': self.time()
+        }
+
 
 class RequestData:
     def __init__(self, data=None):

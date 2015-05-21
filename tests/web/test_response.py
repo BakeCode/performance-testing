@@ -42,3 +42,17 @@ class ResponseTestCase(unittest.TestCase):
             '   %s   %.4f   %d' % (self.url, self.time, self.code),
             response.__str__()
         )
+
+    def test_to_dictionary(self):
+        dictionary = {
+            'code': self.code,
+            'started': self.started,
+            'time': self.time
+        }
+        response = Response(
+            url=self.url,
+            started=self.started,
+            finished=self.finished,
+            code=self.code
+        )
+        self.assertDictEqual(dictionary, response.to_dictionary())

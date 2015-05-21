@@ -58,6 +58,16 @@ class ClientTestCase(unittest.TestCase):
             self.assertTrue(key in content)
             self.assertEqual(requests_counter, len(content[key]))
 
+        client = Client(
+            host=self.host,
+            requests=requests,
+            do_requests_counter=-1,
+            run_event=run_event,
+            finish_event=finish_event,
+            client_name=client_name
+        )
+        client.run()
+
     def test_write_to_file(self):
         client_name = 'client_0'
         client = Client(

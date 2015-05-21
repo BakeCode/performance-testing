@@ -16,4 +16,4 @@ class RequestDataTestCase(unittest.TestCase):
         data = {'foo': 'bar'}
         request_data = RequestData(data=data)
         self.assertDictEqual(data, request_data.get_converted(type=Request.GET))
-        self.assertNotEqual(data, request_data.get_converted(type=Request.POST))
+        self.assertIsNone(request_data.get_converted(type=Request.POST))

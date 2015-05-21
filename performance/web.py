@@ -103,6 +103,7 @@ class RequestData:
     def get_converted(self, type=Request.GET):
         if type is Request.GET:
             return self.data
+        return None
 
 
 class RequestTypeError(Exception):

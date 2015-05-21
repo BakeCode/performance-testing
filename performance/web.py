@@ -11,7 +11,10 @@ class Client(Thread):
         self.counter = do_requests_counter
 
     def run(self):
-        pass
+        while 0 < self.counter:
+            for request in self.requests:
+                print('%s - %.4f' % (request.url, request.do(host=self.host)))
+            self.counter = self.counter - 1
         # do requests
 
 

@@ -1,12 +1,18 @@
 import requests
 from time import time
+from threading import Thread
 
 
-class Client:
+class Client(Thread):
     def __init__(self, host, requests, do_requests_counter):
+        super(Client, self).__init__()
         self.host = host
         self.requests = requests
         self.counter = do_requests_counter
+
+    def run(self):
+        pass
+        # do requests
 
 
 class Request:

@@ -3,8 +3,10 @@ from time import time
 
 
 class Client:
-    def __init__(self):
-        pass
+    def __init__(self, host, requests, do_requests_counter):
+        self.host = host
+        self.requests = requests
+        self.counter = do_requests_counter
 
 
 class Request:

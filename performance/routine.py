@@ -38,7 +38,7 @@ class Tool:
                     client.join()
                 print(' > Exited with CTRL-C')
         else:
-            print('Invalid configuration')
+            print(' > Invalid configuration')
 
 
 class Config:

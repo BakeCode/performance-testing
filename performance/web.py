@@ -13,9 +13,10 @@ class Client(Thread):
         self.finish_event = finish_event
 
     def run(self):
+        responses = []
         while 0 < self.counter and self.event.is_set():
             for request in self.requests:
-                print(request.do(host=self.host))
+                responses.append(request.do(host=self.host))
             self.counter = self.counter - 1
         print ' > Finished a client'
         self.finish_event.finish()

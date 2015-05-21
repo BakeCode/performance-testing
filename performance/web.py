@@ -4,7 +4,6 @@ from threading import Thread
 
 
 class Client(Thread):
-    def __init__(self, host, requests, do_requests_counter, event, finish_event):
     def __init__(self, host, requests, do_requests_counter, event, finish_event, client_name):
         super(Client, self).__init__()
         self.host = host

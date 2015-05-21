@@ -12,12 +12,9 @@ class Tool:
 
 
 class Config:
-    def __init__(self, host, requests=None, requests_per_client=10, clients_count=1):
+    def __init__(self, host, requests_per_client=10, clients_count=1):
         self.host = host
-        if requests is None:
-            self.requests = []
-        else:
-            self.requests = requests
+        self.requests = []
         self.requests_per_client = requests_per_client
         self.clients_count = clients_count
 

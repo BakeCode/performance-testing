@@ -10,3 +10,6 @@ run:
 bower:
 	bower install c3
 
+result:
+	python -m SimpleHTTPServer 8031
+

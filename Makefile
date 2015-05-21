@@ -1,5 +1,5 @@
 test:
-	nosetests tests/
+	nosetests --with-coverage --cover-package=performance tests/
 
 watch:
 	watchmedo shell-command --patterns="*.py" --recursive --command='make test'

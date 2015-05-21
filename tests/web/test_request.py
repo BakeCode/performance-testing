@@ -1,5 +1,5 @@
 import unittest
-from performance.web import Request, RequestTypeError, Response
+from performance.web import Request, RequestTypeError, Response, RequestData
 
 
 class RequestTestCase(unittest.TestCase):
@@ -19,6 +19,10 @@ class RequestTestCase(unittest.TestCase):
 
     def test_do(self):
         request = Request(url='/', type=Request.GET)
+        response = request.do(host=self.host)
+        self.assertTrue(isinstance(response, Response))
+
+        request = Request(url='/', type=Request.GET, data=RequestData(data=''))
         response = request.do(host=self.host)
         self.assertTrue(isinstance(response, Response))
 

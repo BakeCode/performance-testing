@@ -38,9 +38,9 @@ class RequestData:
     def __init__(self, data=None):
         self.data = data
 
-    def for_type(self, type=Request.GET):
+    def get_converted(self, type=Request.GET):
         if type is Request.GET:
-            return data
+            return self.data
 
 
 class RequestTypeError(Exception):

@@ -52,6 +52,6 @@ class ToolTestCase(unittest.TestCase):
         self.assertEqual(' > Started tests\n > Stop tests with CTRL-C\n > Interrupted a client\n > Interrupted a client\n > Exited with CTRL-C\n', print_results.getvalue())
 
 def interrupt():
-    time.sleep(1)
+    time.sleep(0.1)
     _thread.interrupt_main()
 

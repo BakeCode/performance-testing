@@ -36,4 +36,3 @@ class ToolTestCase(unittest.TestCase):
         tool.run()
         self.assertRegexpMatches(print_results.getvalue(), ' > Started tests\\n > Stop tests with CTRL-C\\n( > Finished a client\\n){2} > Finished 40 tests in [0-9]{1,10}\.[0-9]{2} seconds\\n')
 
-

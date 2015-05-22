@@ -17,6 +17,7 @@ class Tool:
             clients = []
             print(' > Started tests')
             print(' > Stop tests with CTRL-C')
+            start_time = time.time()
             for client_index in range(self.config.clients_count):
                 client = web.Client(
                     host=self.config.host,
@@ -31,7 +32,9 @@ class Tool:
             try:
                 while finish_event.finished < self.config.clients_count:
                     time.sleep(.1)
-                print(' > Finished tests')
+                end_time = time.time()
+                total_requests = self.config.requests_per_client * self.config.clients_count * len(self.config.requests)
+                print(' > Finished %d tests in %.2f seconds' % (total_requests, end_time - start_time))
             except KeyboardInterrupt:
                 run_event.clear()
                 for client in clients:

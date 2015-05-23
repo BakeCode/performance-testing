@@ -13,32 +13,28 @@ class Tool:
         if self.config.is_valid():
             run_event = threading.Event()
             run_event.set()
-            finish_event = FinishEvent()
             clients = []
             print(' > Started tests')
             print(' > Stop tests with CTRL-C')
-            start_time = time.time()
-            for client_index in range(self.config.clients_count):
-                client = web.Client(
-                    host=self.config.host,
-                    requests=self.config.requests,
-                    do_requests_counter=self.config.requests_per_client,
-                    run_event=run_event,
-                    finish_event=finish_event,
-                    client_name='client_%d' % client_index
-                )
-                clients.append(client)
-                client.start()
             try:
-                while finish_event.finished < self.config.clients_count:
-                    time.sleep(.1)
+                start_time = time.time()
+                for client_index in range(self.config.clients_count):
+                    client = web.Client(
+                        host=self.config.host,
+                        requests=self.config.requests,
+                        do_requests_counter=self.config.requests_per_client,
+                        run_event=run_event,
+                        client_name='client_%d' % client_index
+                    )
+                    clients.append(client)
+                    client.start()
+                for client in clients:
+                    client.join()
                 end_time = time.time()
                 total_requests = self.config.requests_per_client * self.config.clients_count * len(self.config.requests)
                 print(' > Finished %d tests in %.2f seconds' % (total_requests, end_time - start_time))
             except KeyboardInterrupt:
                 run_event.clear()
-                for client in clients:
-                    client.join()
                 print(' > Exited with CTRL-C')
         else:
             print(' > Invalid configuration')
@@ -64,11 +60,3 @@ class Config:
             or
             self.requests_per_client < 1
         )
-
-
-class FinishEvent:
-    def __init__(self):
-        self.finished = 0
-
-    def finish(self):
-        self.finished = self.finished + 1

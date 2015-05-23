@@ -5,13 +5,12 @@ import json
 
 
 class Client(Thread):
-    def __init__(self, host, requests, do_requests_counter, run_event, finish_event, client_name):
+    def __init__(self, host, requests, do_requests_counter, run_event, client_name):
         super(Client, self).__init__()
         self.host = host
         self.requests = requests
         self.counter = do_requests_counter
         self.run_event = run_event
-        self.finish_event = finish_event
         self.client_name = client_name
         self.responses = []
 
@@ -31,7 +30,6 @@ class Client(Thread):
             self.write_to_file(data=data)
         else:
             print(' > Interrupted a client')
-        self.finish_event.finish()
 
     def write_to_file(self, data):
         stream = open('result/%s.json' % self.client_name, 'w')

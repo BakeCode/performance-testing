@@ -1,6 +1,5 @@
 import unittest
 from performance.web import Client, Request
-from performance.routine import FinishEvent
 from threading import Event
 import json
 
@@ -17,7 +16,6 @@ class ClientTestCase(unittest.TestCase):
             requests=requests,
             do_requests_counter=requests_counter,
             run_event=Event(),
-            finish_event=FinishEvent(),
             client_name='client_0'
         )
         self.assertListEqual(requests, client.requests)
@@ -32,18 +30,15 @@ class ClientTestCase(unittest.TestCase):
         requests_counter = 5
         run_event = Event()
         run_event.set()
-        finish_event = FinishEvent()
         client_name = 'client_0'
         client = Client(
             host=self.host,
             requests=requests,
             do_requests_counter=requests_counter,
             run_event=run_event,
-            finish_event=finish_event,
             client_name=client_name
         )
         client.run()
-        self.assertEqual(1, finish_event.finished)
         self.assertEqual(0, client.counter)
         self.assertEqual(requests_counter * len(requests), len(client.responses))
         stream = open('result/%s.json' % client_name, 'r')
@@ -63,7 +58,6 @@ class ClientTestCase(unittest.TestCase):
             requests=requests,
             do_requests_counter=-1,
             run_event=run_event,
-            finish_event=finish_event,
             client_name=client_name
         )
         client.run()
@@ -75,7 +69,6 @@ class ClientTestCase(unittest.TestCase):
             requests=None,
             do_requests_counter=None,
             run_event=None,
-            finish_event=None,
             client_name=client_name
         )
         data = {

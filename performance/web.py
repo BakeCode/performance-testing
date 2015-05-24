@@ -25,11 +25,9 @@ class Client(Thread):
                 data[key].append(round(response.time(), 5))
                 self.responses.append(response)
             self.counter = self.counter - 1
-        if self.counter is 0:
+        if self.counter is 0 and self.run_event.is_set():
             print(' > Finished a client')
             self.write_to_file(data=data)
-        else:
-            print(' > Interrupted a client')
 
     def write_to_file(self, data):
         stream = open('result/%s.json' % self.client_name, 'w')

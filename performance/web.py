@@ -26,7 +26,6 @@ class Client(Thread):
                 self.responses.append(response)
             self.counter = self.counter - 1
         if self.counter is 0 and self.run_event.is_set():
-            print(' > Finished a client')
             self.write_to_file(data=data)
 
     def write_to_file(self, data):

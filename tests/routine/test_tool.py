@@ -1,11 +1,10 @@
 import unittest
 from performance.routine import Tool, Config
 from performance.web import Request
-from io import StringIO
-import sys
 from threading import Thread
 import _thread
 import time
+from nose.plugins.capture import Capture
 
 
 class ToolTestCase(unittest.TestCase):
@@ -14,6 +13,8 @@ class ToolTestCase(unittest.TestCase):
         self.requests = []
         self.requests.append(Request(url='/'))
         self.requests.append(Request(url='/about'))
+        self.capture = Capture()
+        self.capture.begin()
 
     def test_init(self):
         config = Config(host=self.host)
@@ -25,33 +26,37 @@ class ToolTestCase(unittest.TestCase):
 
     def test_run(self):
         config = Config(host=self.host, clients_count=2)
-        print_results = StringIO()
-        sys.stdout = print_results
         tool = Tool(config=config)
+        self.capture.beforeTest(test=None)
         tool.run()
-        self.assertEqual(' > Invalid configuration\n', print_results.getvalue())
-        print_results.close()
-        print_results = StringIO()
-        sys.stdout = print_results
+        self.assertEqual(' > Invalid configuration\n', self.capture.buffer)
+        self.capture.afterTest(test=None)
         config.add_request(self.requests[0])
         config.add_request(self.requests[1])
         tool = Tool(config=config)
+        self.capture.beforeTest(test=None)
         tool.run()
-        self.assertRegexpMatches(print_results.getvalue(), ' > Started tests\\n > Stop tests with CTRL-C\\n( > Finished a client\\n){2} > Finished 40 tests in [0-9]{1,10}\.[0-9]{2} seconds\\n')
+        self.assertRegexpMatches(
+            self.capture.buffer,
+            ' > Started tests\n > Stop tests with CTRL-C\n( > Finished a client\n){2} > Finished 40 tests in [0-9]{1,4}\.[0-9]{2} seconds\n'
+        )
+        self.capture.afterTest(test=None)
 
     def test_run_interrupt(self):
         config = Config(host=self.host, clients_count=2)
-        print_results = StringIO()
-        sys.stdout = print_results
         config.add_request(self.requests[0])
         config.add_request(self.requests[1])
         tool = Tool(config=config)
         thread = Thread(target=interrupt)
         thread.start()
+        self.capture.beforeTest(test=None)
         tool.run()
-        self.assertEqual(' > Started tests\n > Stop tests with CTRL-C\n > Interrupted a client\n > Interrupted a client\n > Exited with CTRL-C\n', print_results.getvalue())
+        self.assertEqual(
+            ' > Started tests\n > Stop tests with CTRL-C\n > Exited with CTRL-C\n',
+            self.capture.buffer
+        )
+        self.capture.afterTest(test=None)
 
 def interrupt():
     time.sleep(0.1)
     _thread.interrupt_main()
-

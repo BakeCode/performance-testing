@@ -28,7 +28,13 @@ class Tool:
                     )
                     clients.append(client)
                     client.start()
-                clients = [client.join(1) for client in clients if client is not None and client.is_alive()]
+                while len(clients) > 0:
+                    for client in clients:
+                        if client is not None and client.is_alive():
+                            client.join(1)
+                        else:
+                            clients.remove(client)
+                            print(' > Finished a client')
                 end_time = time.time()
                 total_requests = self.config.requests_per_client * self.config.clients_count * len(self.config.requests)
                 print(' > Finished %d tests in %.2f seconds' % (total_requests, end_time - start_time))

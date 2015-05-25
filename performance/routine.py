@@ -1,4 +1,4 @@
-from performance import web
+from performance.web import Client, Request
 import time
 import threading
 
@@ -19,7 +19,7 @@ class Tool:
             try:
                 start_time = time.time()
                 for client_index in range(self.config.clients_count):
-                    client = web.Client(
+                    client = Client(
                         host=self.config.host,
                         requests=self.config.requests,
                         do_requests_counter=self.config.requests_per_client,
@@ -53,7 +53,7 @@ class Config:
         self.clients_count = clients_count
 
     def add_request(self, request):
-        if not isinstance(request, web.Request):
+        if not isinstance(request, Request):
             raise TypeError('No performance.web.Request object')
         self.requests.append(request)
 

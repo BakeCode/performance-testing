@@ -1,5 +1,6 @@
 import unittest
 from performance.web import Client, Request
+from performance.result import Result
 from threading import Event
 import json
 
@@ -16,10 +17,12 @@ class ClientTestCase(unittest.TestCase):
             requests=requests,
             do_requests_counter=requests_counter,
             run_event=Event(),
-            client_name='client_0'
+            client_name='client_0',
+            result=Result()
         )
         self.assertListEqual(requests, client.requests)
         self.assertEqual(requests_counter, client.counter)
+        self.assertTrue(isinstance(client.result, Result))
 
     def test_run(self):
         requests = [
@@ -36,7 +39,8 @@ class ClientTestCase(unittest.TestCase):
             requests=requests,
             do_requests_counter=requests_counter,
             run_event=run_event,
-            client_name=client_name
+            client_name=client_name,
+            result=Result()
         )
         client.run()
         self.assertEqual(0, client.counter)
@@ -58,7 +62,8 @@ class ClientTestCase(unittest.TestCase):
             requests=requests,
             do_requests_counter=-1,
             run_event=run_event,
-            client_name=client_name
+            client_name=client_name,
+            result=Result()
         )
         client.run()
 
@@ -69,7 +74,8 @@ class ClientTestCase(unittest.TestCase):
             requests=None,
             do_requests_counter=None,
             run_event=None,
-            client_name=client_name
+            client_name=client_name,
+            result=Result()
         )
         data = {
             'foo': 'bar',

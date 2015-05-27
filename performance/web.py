@@ -5,7 +5,7 @@ import json
 
 
 class Client(Thread):
-    def __init__(self, host, requests, do_requests_counter, run_event, client_name):
+    def __init__(self, host, requests, do_requests_counter, run_event, client_name, result):
         super(Client, self).__init__()
         self.host = host
         self.requests = requests
@@ -13,6 +13,7 @@ class Client(Thread):
         self.run_event = run_event
         self.client_name = client_name
         self.responses = []
+        self.result = result
 
     def run(self):
         data = {}
